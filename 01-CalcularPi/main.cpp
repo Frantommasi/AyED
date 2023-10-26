@@ -1,26 +1,37 @@
 #include <iostream>
-#include <iomanip>
-#include <cmath>
+#include <iomanip>  // Para formatear la salida con precisión decimal
 
-const float PI = 3.141592;
+using namespace std;
 
-int main(void)
-{
-    float sum = 0;
-    float aux;
-    size_t count = 0;
-
-    std::cout << std::fixed;
-    std::cout << std::setprecision(6);
-
-    {
-        aux = pow(-1,count)/((2 * count) + 1);
-        sum += aux;
-        count++;
+int main() {
+    double pi = 0.0;
+    int n = 0;
+    int sign = 1;
+    
+    while (true) {
+        // Calcular el término actual de la serie
+        double term = 4.0 / (2 * n + 1);
+        
+        // Actualizar el valor de pi
+        if (sign == 1) {
+            pi += term;
+        } else {
+            pi -= term;
+        }
+        
+        // Cambiar el signo para el próximo término
+        sign *= -1;
+        
+        // Verificar si tenemos al menos 6 decimales correctos
+        if (abs(pi - 3.141592) < 0.000001) {
+            break;
+        }
+        
+        // Incrementar el contador
+        n++;
     }
-
-    std::cout << "Llegamos al resultado en " << count << " iteracciones." << std::endl;
-    std::cout <<"Resultado: " << (4 * sum) << std::endl;
-
+    
+    cout << "El valor de pi calculado es: " << fixed << setprecision(6) << pi << endl;
+    
     return 0;
 }
