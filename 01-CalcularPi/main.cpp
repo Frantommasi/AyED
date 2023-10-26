@@ -1,37 +1,41 @@
 #include <iostream>
-#include <iomanip>  // Para formatear la salida con precisión decimal
+#include <iomanip>
 
 using namespace std;
 
-int main() {
+//Esta funcion cicla mientras el término (termino) 
+//sea menor que 1e-6 (que vendria a ser igual a 10000000), 
+//lo que corresponde a una precisión de 6 decimales.
+double calcularPi() {
     double pi = 0.0;
-    int n = 0;
-    int sign = 1;
+    double termino = 1.0;
+    int denominador = 1;
+    int contador = 0;
     
-    while (true) {
-        // Calcular el término actual de la serie
-        double term = 4.0 / (2 * n + 1);
-        
-        // Actualizar el valor de pi
-        if (sign == 1) {
-            pi += term;
+    //alterna entre la suma y resta de terminos a 
+    //la variable pi mientras se cumpla la condicion dada
+    while (termino >= 1e-7) {
+        if (contador % 2 == 0) {
+            pi += termino;
         } else {
-            pi -= term;
+            pi -= termino;
         }
-        
-        // Cambiar el signo para el próximo término
-        sign *= -1;
-        
-        // Verificar si tenemos al menos 6 decimales correctos
-        if (abs(pi - 3.141592) < 0.000001) {
-            break;
-        }
-        
-        // Incrementar el contador
-        n++;
+
+        denominador += 2;
+        termino = 1.0 / denominador;
+        contador++;
     }
+
+    return pi * 4;
+}
+
+int main() {
+    //Utilizo setprecision y fixed para que el valor que sale por
+    //consola sea representado con exactamente la cantidad de 
+    //decimales indicados en la precision
     
-    cout << "El valor de pi calculado es: " << fixed << setprecision(6) << pi << endl;
+    cout << setprecision(6) << fixed;
+    cout << " El valor de pi calculado es: " << calcularPi() << endl;
     
     return 0;
 }
